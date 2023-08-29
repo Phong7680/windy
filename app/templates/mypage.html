@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}ホーム{% endblock %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-11"><h1> マイページ </h2></div>
+        <div class="col-1"><a href="/logout">ログアウト</a></div>
+    </div>
+</div>
+
+<!-- 投稿-->
+    <br/>
+    <div class = "row">
+        <div class="col-2"><a href="/mypage"><img src="{{ avatar }}" style="width:150px"></a></div>
+        <div class="col-2"><h2>{{tw_pt[0][2]}}</h2></div>
+    </div>
+
+<!--検索-->
+
+<!--他の機能-->
+<div class="container">
+    <div class="col"><a href="/">ホームページ</a></div>
+    <div class="col"><a href="/mypage">再読込</a></div>
+    <div class="col"><a href="/passwd-change">パスワード変更</a></div>
+    <div class="col"><a href="/delete">ユーザ削除</a></div>
+    <div class="col"><a href="{{url_for('upload', type='profile')}}">プロフィール写真変更</a></div>
+</div>
+<br/>
+<form action="/search" method="POST">
+    <p>キーワード：<input type="input" name="keyword"/><input type="submit" value="検索"/></p>
+</form>
+
+<p>データ件数： {{ dt_size }} </p>
+<div>
+    <form action="/twdelete" method="POST">
+        <table class="table table-striped">
+            {% for content in list %}
+                <tr>
+                    <td>                              
+                        <label><input type="checkbox" name = "key" value="{{content[0]}}" class="form-check-input"/>
+                            {% autoescape false %}
+                            <img src="{{ 'images/' + content[5] + '.jpg' }}" style="width:30px">
+                            {{content[1]}}
+                            {{content[3]}}
+                            <br/>
+                            {{ content[2] | replace("\r\n", "<br/>") }}                            
+                            {% endautoescape %} 
+                            <br/>
+                            {% if content[4] == 'y' %}
+                                <img src="{{'images/'+content[0]+'.jpg'}}" style="width:70px">
+                            {% endif %}
+                        </label>                   
+                    </td>
+                </tr>
+            {% endfor %}
+
+            <!--削除-->
+                <div class ="col-1">
+                    <!--削除ボタン-->
+                    <p><input type = "submit" name = "delete" value="削除" class="btn btn-primary"></p>
+                </div>
+        </table>
+    </form>
+</div> 
+<div class = "col-11">
+    <!--全投稿削除-->
+    <form action="/twalldelete" method="POST">
+        <p><input type="submit" class="btn btn-primary" value="全部削除"></p>
+    </form>
+</div>
+{% endblock %}

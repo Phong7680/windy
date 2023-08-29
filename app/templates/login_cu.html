@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}ログイン{% endblock %}
+{% block content%}
+<h2>ログイン</h2>
+
+        <!-- 入力チェック-->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li style="color: red;" class = "flash"> {{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <!--ログイン成功メッセージ-->
+        {% if id != ""  %}
+            <span>{{ id }} さん登録が完了しました。ログインしてください。</span>
+        {% endif %}
+
+        <form action="/login" method="POST">
+            <p>ユーザID<input type="input" name="id" placeholder="ユーザ名"/></p>
+            <p>パスワード<input type="password" name="passwd" placeholder="パスワード"/></p>
+            <p><input type="submit" class="btn btn-primary" value="ログイン" ></p>
+            <p><a href='/user'>ユーザ登録はこちら</a></p>
+        </form>
+        <p>{{ msg }}</p>
+{% endblock %}

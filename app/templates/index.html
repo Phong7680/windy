@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}ホーム{% endblock %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-11"><h2> Windy</h2></div>
+        <div class="col-1"><a href="/logout">ログアウト</a></div>
+    </div>
+</div>
+
+<!-- 投稿-->
+<form action="/send" method="POST">
+    <div class = "row">
+        <div class="col-6"><p class="ms-3 me-5"><textarea class="form-control" name="contents" rows="3"></textarea></p></div>
+        <div class="col-5"><p><input type="submit" class="btn btn-primary" value="投稿"></p></div>
+        <div class="col-1"><a href="/mypage"><img src="{{ avatar }}" style="width:70px"></a></div>
+    </div>
+</form>
+<!--写真アップロード--> 
+{% if tw_pt[0][0] == 0 %}
+    <div class="col"><a href="{{url_for('upload', type='tweet')}}">写真追加</a></div>
+{% else %}
+    <img src="{{ tw_pt[0][1] }}" style="width:70px">
+    <div class="col"><a href="{{url_for('upload', type='tweet')}}">写真変更</a></div>
+{% endif %}
+
+<!--検索-->
+<form action="/search" method="POST">
+    <p>キーワード：<input type="input" name="keyword"/><input type="submit" value="検索"/></p>
+</form>
+
+<p>データ件数： {{ dt_size }} </p>
+<div>
+    <form action="/twdelete" method="POST">
+        <table class="table table-striped">
+            {% for content in list %}
+                <tr>
+                    <td>                              
+                        {% autoescape false %}
+                            <img src="{{ 'images/' + content[5] + '.jpg' }}" style="width:30px">
+                            {{content[1]}}
+                            {{content[3]}}
+                            <br/>
+                            {{ content[2] | replace("\r\n", "<br/>") }}                            
+                            {% endautoescape %} 
+                            <br/>
+                            {% if content[4] == 'y' %}
+                                <img src="{{'images/'+content[0]+'.jpg'}}" style="width:140px">
+                        {% endif %}                 
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</div> 
+
+    <div class="col"><a href="/">再読込</a></div>
+{% endblock %}

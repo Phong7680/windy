@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/jpg" href="images/favicon.jpg"> 
+  <title>ユーザ登録</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+  
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="box-form">
+	<div class="left">
+		<div class="overlay">
+		<h1>Windy</h1>
+		<p>いつもみんなで楽しみましょう！</p>
+		<span>
+			<p>他のソーシャルメディアでログイン</p>
+			<a href="htpps://twitter.com"><i class="fa fa-facebook" aria-hidden="true"></i>Facebook</a>
+			<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i>Twitter</a>
+		</span>
+		</div>
+	</div>
+	
+		<div class="right">
+		<h5>ユーザ登録</h5>
+		<p>ユーザIDがあれば　<a href="/login"> ログイン</a></p>
+		
+		<!-- 入力チェック-->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li style="color: red;" class = "flash"> {{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+		<!-- 登録 -->
+		<form action="/useradd" method="POST">
+			<div class="inputs">
+				<input type="text" name="id" placeholder="ユーザID">
+				<br>
+				<input type="password" name="passwd" placeholder="パスワード">
+			</div>
+			<br><br>
+			
+			<br>
+			<button>ユーザ登録</button>
+		</form>
+
+	</div>
+	
+</div>
+<!-- partial -->
+  
+</body>
+</html>

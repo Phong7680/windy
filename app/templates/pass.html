@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}パスワード変更{% endblock %}
+{% block content%}
+<h2>パスワード変更</h2>
+<!--Error-->
+{% if not id %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li style="color: red;" class = "flash"> {{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endif %}
+
+<!--Pass change-->
+<form action="/passwd-change" method="POST">
+    <p>新しいパスワード<input type="password" name="newpasswd1" placeholder="新パスワード"/></p>
+    <p>新しいパスワード確認<input type="password" name="newpasswd2" placeholder="新パスワード"/></p>
+    <p><input type="submit" class="btn btn-primary" value="変更" ></p>
+    <p><a href='/mypage'>キャンセル</a></p>
+</form>        
+{% endblock %}

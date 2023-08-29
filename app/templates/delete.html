@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}ユーザ削除{% endblock %}
+{% block content%}
+<h2>ユーザ削除</h2>
+{% if error %}
+<ul>
+    <li style="color: red;" class = "flash">確認コードが間違いました。もう一入力してください。</li>
+</ul>
+{% endif %}
+{% if number %}
+    <p>ユーザを削除したいですか？本当に削除したい場合は以下の確認コードを入力してからボタンを押してください。</p>
+    <p>この操作を復元できないことに留意してください。</p>
+    <p>{{ number }}</p>
+    <form action="/delete" method="POST">
+        <p>確認コード<input type="input" name="code" placeholder="1234"/></p>
+        <p><input type="submit" class="btn btn-primary" value="削除" ></p>
+        <p><a href='/'>戻る</a></p>
+    </form>
+{% else %}
+    <p>削除が完了しました。</p>
+    <p><a href='/user'>ユーザ登録</a></p>
+    <p><a href='/login'>ログイン</a></p>
+{% endif %}
+{% endblock %}

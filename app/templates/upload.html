@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}アップロード{% endblock %}
+{% block content%}
+    {% if not complete %}
+        <h1>アップロード</h1>
+        {% if type == "profile" %}
+            <form action="{{url_for('upload', type='profile')}}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="example">
+                <input type="submit" value="アップロード">
+            </form>
+        {% else %}
+        <form action="{{url_for('upload', type='tweet')}}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="example">
+            <input type="submit" value="アップロード">
+        </form>
+        {% endif%}
+        {% if error %}
+            <ul>
+                <li style="color: red;" class = "flash">アップロードファイルの拡張子はjpgだけです。</li>
+            </ul>
+        {% endif %}
+    {% else %}
+        <h1>ファイルアップロード完了</h1>
+        <form action="/" method="GET">
+            <p><input type="submit" class="btn btn-primary" value="戻る"></p>
+        </form>
+    {% endif %}
+
+
+{% endblock %}
